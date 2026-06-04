@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGA — STEM Girls Academy Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Space Mono', 'Courier New', Courier, monospace;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            background-color: #06020f;
+            color: #ff79c6;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* КИБЕР РОЗОВ ФОН */
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            background: radial-gradient(circle at 50% 50%, #1a042e 0%, #06020f 100%);
+            pointer-events: none;
+        }
+
+        /* ИСКРИ ПОД МИШКАТА */
+        .sparkle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+        }
+
+        .page-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            pointer-events: none;
+        }
+
+        .page-layer * { pointer-events: auto; }
+
+        .hud-text {
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: #ff79c6;
+            line-height: 1.8;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(255, 121, 198, 0.5);
+        }
+
+        .hud-highlight { color: #8be9fd; font-weight: bold; }
+        
+        #live-coder-prompt {
+            color: #50fa7b;
+            font-weight: bold;
+            border-right: 2px solid #50fa7b;
+            white-space: nowrap;
+            animation: blink 0.7s infinite;
+        }
+
+        .top-row { display: flex; justify-content: space-between; width: 100%; }
+        .hero-section { margin-top: auto; margin-bottom: auto; max-width: 900px; }
+        
+        .main-gradient-title {
+            font-family: 'Arial Black', Gadget, sans-serif;
+            font-size: 3.8rem;
+            font-weight: 900;
+            line-height: 1.1;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            background: linear-gradient(45deg, #ff79c6, #ff1493, #bd93f9, #8be9fd);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: flowColors 6s ease infinite;
+            margin-bottom: 25px;
+        }
+
+        @media (max-width: 768px) {
+            .main-gradient-title { font-size: 2.2rem; }
+        }
+
+        .bottom-row { display: flex; justify-content: space-between; align-items: flex-end; width: 100%; }
+
+        .cta-button {
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            border: 2px solid #ff79c6;
+            padding: 18px 38px;
+            background: rgba(26, 8, 38, 0.8);
+            backdrop-filter: blur(8px);
+            border-radius: 50px;
+            box-shadow: 0 0 25px rgba(255, 121, 198, 0.4);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-transform: uppercase;
+        }
+
+        .cta-button:hover {
+            border-color: #50fa7b;
+            color: #50fa7b;
+            box-shadow: 0 0 35px rgba(80, 250, 123, 0.6);
+            transform: scale(1.05) translateY(-3px);
+        }
+
+        /* SYSADMIN ПАНЕЛ */
+        #sysadmin-page {
+            display: none;
+            background: rgba(6, 2, 15, 0.94);
+            backdrop-filter: blur(15px);
+            grid-template-columns: 1fr 1.3fr;
+            grid-template-rows: auto 1fr;
+            gap: 20px;
+        }
+
+        .sys-header {
+            grid-column: 1 / span 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 20, 147, 0.4);
+            padding-bottom: 15px;
+        }
+
+        .column-left, .column-right { display: flex; flex-direction: column; gap: 20px; overflow-y: auto; }
+
+        .sys-box {
+            background: rgba(25, 10, 40, 0.4);
+            border: 1px solid rgba(255, 121, 198, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .box-title { font-size: 11px; color: #8be9fd; letter-spacing: 2px; margin-bottom: 15px; text-transform: uppercase; }
+
+        .server-blade {
+            background: rgba(15, 5, 25, 0.8);
+            border-left: 4px solid #50fa7b;
+            padding: 14px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #fff;
+        }
+        .led { width: 8px; height: 8px; background: #50fa7b; border-radius: 50%; display: inline-block; box-shadow: 0 0 8px #50fa7b; margin-right: 5px; }
+
+        .terminal-container { flex-grow: 1; display: flex; flex-direction: column; background: #030107; border-radius: 8px; border: 1px solid rgba(255, 20, 147, 0.3); padding: 15px; height: 320px; }
+        .terminal-log { flex-grow: 1; overflow-y: auto; font-size: 12px; color: #8be9fd; line-height: 1.6; }
+        .terminal-input-row { display: flex; align-items: center; gap: 8px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 10px; }
+        .terminal-input { flex-grow: 1; background: transparent; border: none; outline: none; color: #50fa7b; font-family: inherit; font-size: 13px; }
+
+        /* WELCOME СТРАНИЦА */
+        #welcome-page {
+            display: none;
+            background: rgba(5, 2, 9, 0.96);
+            backdrop-filter: blur(25px);
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .welcome-card {
+            background: linear-gradient(135deg, rgba(35, 10, 50, 0.9) 0%, rgba(10, 3, 17, 0.95) 100%);
+            border: 2px solid #ff79c6;
+            border-radius: 16px;
+            padding: 40px;
+            width: 480px;
+            text-align: center;
+            box-shadow: 0 0 50px rgba(255, 121, 198, 0.3);
+            animation: cardSpawn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .welcome-title { font-size: 24px; color: #ff79c6; margin-bottom: 10px; letter-spacing: 2px; }
+        .sys-info-table { margin: 25px 0; background: rgba(0, 0, 0, 0.4); border-radius: 8px; padding: 15px; font-size: 12px; text-align: left; }
+        .info-row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
+        .info-label { color: #aaa; }
+        .info-value { color: #8be9fd; font-weight: bold; }
+
+        .enter-dash-btn {
+            background: #ff79c6; color: #050209; border: none; padding: 14px 28px; border-radius: 8px;
+            font-weight: bold; letter-spacing: 2px; cursor: pointer; width: 100%; transition: 0.3s;
+        }
+        .enter-dash-btn:hover { background: #8be9fd; box-shadow: 0 0 25px #8be9fd; }
+
+        /* СТРАНИЦА КРАШ / ИСТОРИЯ НА ОСНОВАТЕЛКИТЕ */
+        #history-page {
+            display: none;
+            background: #06020f;
+            color: #ff5555;
+            z-index: 200;
+            padding: 40px;
+            overflow-y: auto;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .history-container {
+            max-width: 850px;
+            width: 100%;
+            border: 2px solid #ff79c6;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(25, 5, 40, 0.95) 0%, rgba(6, 2, 15, 0.98) 100%);
+            padding: 40px;
+            box-shadow: 0 0 60px rgba(255, 121, 198, 0.25);
+            display: none;
+        }
+
+        .history-title {
+            color: #fff; font-size: 22px; letter-spacing: 2px; margin-bottom: 30px;
+            border-bottom: 2px dashed #ff79c6; padding-bottom: 15px; text-transform: uppercase; text-align: center;
+        }
+
+        .founder-card { margin-bottom: 25px; border-left: 4px solid #8be9fd; padding-left: 20px; color: #e2d9f3; }
+        .founder-name { font-size: 18px; color: #8be9fd; font-weight: bold; margin-bottom: 5px; }
+        .founder-role { font-size: 11px; color: #ff79c6; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; font-weight: bold; }
+
+        #crash-screen { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; width: 100%; font-size: 16px; line-height: 2; }
+
+        /* ОФИЦИАЛЕН БИЗНЕС САЙТ */
+        #main-site-page {
+            display: none;
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            background: #06020f;
+            color: #fff;
+            padding: 40px 20px;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .site-container { max-width: 1100px; width: 100%; }
+
+        .site-nav {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 50px; padding-bottom: 20px; border-bottom: 1px solid rgba(255, 121, 198, 0.2);
+        }
+        .site-nav a { color: #8be9fd; text-decoration: none; font-size: 13px; font-weight: bold; transition: 0.3s; }
+        .site-nav a:hover { color: #ff79c6; text-shadow: 0 0 10px #ff79c6; }
+        .site-logo { font-size: 20px; font-weight: bold; color: #ff79c6; letter-spacing: 2px; }
+        .site-logo span { color: #8be9fd; }
+
+        .business-intro { text-align: center; margin-bottom: 50px; }
+        .business-intro h2 { font-size: 2.5rem; color: #fff; font-family: sans-serif; font-weight: 800; margin-bottom: 15px; background: linear-gradient(to right, #fff, #bd93f9); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .business-intro p { color: #aaa; max-width: 650px; margin: 0 auto; line-height: 1.6; font-family: sans-serif; font-size: 15px; }
+
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 60px; }
+        
+        .service-card {
+            background: rgba(30, 10, 50, 0.3);
+            border: 1px solid rgba(255, 121, 198, 0.15);
+            border-radius: 16px; padding: 35px;
+            transition: all 0.3s ease;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: #ff79c6;
+            box-shadow: 0 10px 30px rgba(255, 121, 198, 0.2);
+        }
+        .service-icon { font-size: 36px; margin-bottom: 20px; }
+        .service-card h3 { font-size: 20px; color: #8be9fd; margin-bottom: 15px; font-family: sans-serif; font-weight: 700; }
+        .service-card p { color: #ccc; font-size: 14px; line-height: 1.6; font-family: sans-serif; }
+
+        /* ОФИЦИАЛНА СЕКЦИЯ: "ЗА НАС" */
+        .about-section {
+            display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 50px;
+            background: linear-gradient(135deg, rgba(25, 5, 50, 0.7) 0%, rgba(10, 2, 20, 0.9) 100%);
+            border: 1px solid rgba(255, 121, 198, 0.3);
+            border-radius: 24px; padding: 50px; margin-bottom: 60px;
+            align-items: center;
+            box-shadow: 0 0 40px rgba(255, 121, 198, 0.05);
+        }
+
+        @media (max-width: 768px) { .about-section { grid-template-columns: 1fr; padding: 30px; } }
+
+        .about-text h3 { font-size: 28px; color: #ff79c6; margin-bottom: 25px; font-family: sans-serif; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+        .about-text p { color: #e2d9f3; font-size: 15px; line-height: 1.8; margin-bottom: 20px; font-family: sans-serif; }
+        
+        .motivation-quote {
+            border-left: 4px solid #50fa7b; padding-left: 20px; font-style: italic;
+            color: #50fa7b; font-size: 16px; line-height: 1.6; margin: 25px 0; font-family: sans-serif;
+        }
+
+        .values-list { display: flex; flex-direction: column; gap: 15px; }
+        .value-item { display: flex; align-items: center; gap: 15px; background: rgba(0,0,0,0.4); padding: 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.03); }
+        .value-badge { background: #8be9fd; color: #000; font-weight: bold; padding: 6px 14px; border-radius: 6px; font-size: 11px; letter-spacing: 1px; }
+        .value-desc { font-family: sans-serif; font-size: 14px; color: #fff; line-height: 1.4; }
+
+        .perks-section {
+            background: rgba(255, 121, 198, 0.02); border: 1px dashed rgba(255, 121, 198, 0.25);
+            border-radius: 16px; padding: 40px; margin-bottom: 60px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px;
+            text-align: center;
+        }
+        .perk-item h4 { font-size: 32px; color: #50fa7b; margin-bottom: 10px; font-weight: bold; }
+        .perk-item p { color: #aaa; font-size: 13px; font-family: sans-serif; }
+
+        .action-banner {
+            text-align: center; background: linear-gradient(90deg, #ff79c6, #bd93f9);
+            padding: 50px 40px; border-radius: 24px; color: #06020f; margin-bottom: 20px;
+            box-shadow: 0 15px 40px rgba(255, 121, 198, 0.2);
+        }
+        .action-banner h3 { font-size: 26px; font-family: sans-serif; font-weight: 800; margin-bottom: 12px; }
+        .action-banner p { font-family: sans-serif; font-size: 16px; margin-bottom: 25px; font-weight: 500; }
+        
+        .site-cta-btn {
+            background: #06020f; color: #fff; font-weight: bold; padding: 16px 45px; border: none; border-radius: 30px;
+            cursor: pointer; letter-spacing: 1px; transition: 0.3s; text-transform: uppercase; font-size: 13px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .site-cta-btn:hover { background: #fff; color: #06020f; transform: scale(1.05); }
+
+        @keyframes cardSpawn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes flowColors { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        @keyframes blink { 50% { border-color: transparent; } }
+    </style>
+</head>
+<body>
+
+    <canvas id="cyberCanvas"></canvas>
+
+    <!-- СТРАНИЦА 1: LANDING С ЖИВ ТЕРМИНАЛ -->
+    <div class="page-layer" id="landing-page">
+        <div class="top-row">
+            <div class="hud-text">
+                // PLATFORM: <span class="hud-highlight">STEM GIRLS ACADEMY</span><br>
+                // FOUNDERS: <span class="hud-highlight">NIYA & IVETA</span><br>
+                <span id="live-coder-prompt">> Инициализиране...</span>
+            </div>
+        </div>
+        <div class="hero-section">
+            <h1 class="main-gradient-title">DECODE THE STEREOTYPES.<br>SHAPE THE FUTURE.</h1>
+            <p style="color: #8be9fd; font-size: 12px; letter-spacing: 4px; font-weight: bold; text-shadow: 0 0 8px #8be9fd;">
+                [ НАПРАВЕНО ОТ ЖЕНИ ПРОГРАМИСТИ ЗА БЪДЕЩИ ЛИДЕРИ ]
+            </p>
+        </div>
+        <div class="bottom-row">
+            <div class="hud-text">SGA.CORE.v2.0.26</div>
+            <button class="cta-button" onclick="navigateToSysAdmin()">СТАРТИРАЙ СИСТЕМАТА →</button>
+        </div>
+    </div>
+
+    <!-- СТРАНИЦА 2: SYSADMIN ТАБЛО -->
+    <div class="page-layer" id="sysadmin-page">
+        <div class="sys-header">
+            <div class="hud-text">// SGA SECURITY OPERATIONS CENTER</div>
+        </div>
+
+        <div class="column-left">
+            <div class="sys-box">
+                <div class="box-title">АКТИВНИ ЯДРА</div>
+                <div class="server-blade"><span>[STEM-01] sga-education-core</span><span><span class="led"></span> ONLINE</span></div>
+                <div class="server-blade"><span>[DB-02] secure-girls-database</span><span><span class="led"></span> ONLINE</span></div>
+            </div>
+
+            <div class="sys-box">
+                <div class="box-title">КРИПТО РЕСУРСИ</div>
+                <div style="font-size:11px; margin-bottom:6px; color:#aaa;">SGA GPU LOAD: <span style="color:#50fa7b">18%</span></div>
+                <div style="font-size:11px; color:#aaa;">RAM ALLOCATED: <span style="color:#8be9fd">35%</span></div>
+            </div>
+        </div>
+
+        <div class="column-right">
+            <div class="sys-box" style="flex-grow: 1; background: #030107;">
+                <div class="box-title" style="display: flex; justify-content: space-between;">
+                    <span>ДИГИТАЛЕН ТЕРМИНАЛ</span>
+                    <span style="color: #8be9fd;" id="register-badge">[ Напиши 'register' ]</span>
+                </div>
+                <div class="terminal-container">
+                    <div class="terminal-log" id="terminalLog">
+                        <div>[SYSTEM] Криптирана връзка със STEM Girls Academy: УСПЕШНА.</div>
+                        <div>[SYSTEM] Напиши <span style="color:#8be9fd">register</span> за нов админ профил, след това <span style="color:#8be9fd">login</span>.</div>
+                    </div>
+                    <div class="terminal-input-row">
+                        <span style="color: #ff79c6; font-weight: bold;" id="termPrompt">sga_admin@mainframe:~#</span>
+                        <input type="text" class="terminal-input" id="termInput" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- СТРАНИЦА 3: WELCOME ЕКРАН -->
+    <div class="page-layer" id="welcome-page">
+        <div class="welcome-card">
+            <div style="font-size: 32px; margin-bottom: 15px;">✨</div>
+            <h2 class="welcome-title">ACCESS GRANTED</h2>
+            <p style="color: #8be9fd; font-size: 13px; margin-bottom: 15px;">Добре дошла в ядрото на STEM Girls Academy!</p>
+            <div class="sys-info-table">
+                <div class="info-row"><span class="info-label">АДМИНИСТРАТОР:</span><span class="info-value" id="welcome-username">USER</span></div>
+                <div class="info-row"><span class="info-label">СТАТУС:</span><span class="info-value" style="color: #50fa7b;">[ LEAD FUTURE ENGINEER ]</span></div>
+            </div>
+            <button class="enter-dash-btn" onclick="triggerSystemCrash()">ВЛЕЗ В СИСТЕМНОТО ТАБЛО</button>
+        </div>
+    </div>
+
+    <!-- СТРАНИЦА 4: КРАШ СИМУЛАЦИЯ & АРХИВ -->
+    <div class="page-layer" id="history-page">
+        <div id="crash-screen"></div>
+
+        <div class="history-container" id="historyContainer">
+            <h2 class="history-title">🔒 СКРИТ АРХИВ: ЖЕНИТЕ, КОИТО СЪЗДАДОХА STEM СВЕТА</h2>
+            
+            <div class="founder-card">
+                <div class="founder-name">Ada Lovelace (Ада Лъвлейс)</div>
+                <div class="founder-role">Първият компютърен програмист в историята (1843 г.)</div>
+                <p>Тя написва първия алгоритъм за машина. Ада първа прозира, че компютрите могат да създават музика, изкуство и сложен софтуер.</p>
+            </div>
+
+            <div class="founder-card">
+                <div class="founder-name">Grace Hopper (Грейс Хопър)</div>
+                <div class="founder-role">Пионер в софтуера & Майка на термина "Бъг"</div>
+                <p>Адмирал от флота, Грейс създава първия в света компилатор – технологията, превеждаща думите ни в компютърен код.</p>
+            </div>
+
+            <div class="founder-card">
+                <div class="founder-name">Radia Perlman (Радия Пърлман)</div>
+                <div class="founder-role">Майката на Интернет</div>
+                <p>Изобретява протокола STP (Spanning Tree Protocol), който предпазва глобалната мрежа от постоянен срив и управлява интернет трафика.</p>
+            </div>
+
+            <button class="enter-dash-btn" style="margin-top: 30px; background: #8be9fd; color: #000;" onclick="navigateToOfficialSite()">
+                ПРОДЪЛЖИ КЪМ ОФИЦИАЛНИЯ САЙТ →
+            </button>
+        </div>
+    </div>
+
+    <!-- ОФИЦИАЛЕН БИЗНЕС САЙТ -->
+    <div id="main-site-page">
+        <div class="site-container">
+            <nav class="site-nav">
+                <div class="site-logo">STEM_GIRLS_<span>ACADEMY</span></div>
+                <div>
+                    <a href="#about-us-anchor">НАШАТА ИСТОРИЯ ↓</a>
+                </div>
+            </nav>
+
+            <div class="business-intro">
+                <h2>Какво Предлагаме?</h2>
+                <p>Ние изграждаме следващото поколение жени лидери в технологиите, инженерството и науката чрез интерактивни и достъпни образователни програми.</p>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">💻</div>
+                    <h3>Системна Администрация & DevOps</h3>
+                    <p>Практически курсове по компютърни мрежи (Networking), управление на Linux сървъри и съвременни DevOps технологии за автоматизация.</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🤖</div>
+                    <h3>Роботика & STEM Работилници</h3>
+                    <p>Интерактивни сесии по хардуерно инженерство, 3D моделиране и роботика, развиващи инженерното и логическо мислене.</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🚀</div>
+                    <h3>Менторство & Кариерен старт</h3>
+                    <p>Директна връзка с успешни дами от ИТ сектора. Подкрепа при изграждане на портфолио, подготовка за интервюта и кариерно ориентиране.</p>
+                </div>
+            </div>
+
+            <!-- СЕКЦИЯ: ЗА НАС -->
+            <div id="about-us-anchor" style="padding-top: 20px;"></div>
+            <div class="about-section">
+                <div class="about-text">
+                    <h3>За Нас и Нашата Кауза</h3>
+                    <p>Ние сме <strong>Ния и Ивета</strong>. Като момичета, които в момента едновременно учат и работят в технологичния свят, ежедневно се сблъшаваме с една реалност: <strong>нуждата да се доказваш двойно по-силно</strong>, за да бъде чут гласът ти.</p>
+                    
+                    <p>Точно затова създадохме <strong>STEM Girls Academy</strong>. Нашата мисия е да разбием стереотипите и да докажем на всички, че жените специалисти са невероятно добри, иновативни и напълно готови да водят технологичната индустрия напред.</p>
+                    
+                    <div class="motivation-quote">
+                        "Кодът няма пол. Ние не просто предаваме знания – ние изграждаме увереност, превръщайки всяко момиче в равноправен и силен играч на дигиталната сцена."
+                    </div>
+                </div>
+
+                <div class="values-list">
+                    <div style="font-size: 11px; letter-spacing: 2px; color: #ff79c6; margin-bottom: 10px; font-weight: bold;">// ФОКУС НА ЕКИПА</div>
+                    
+                    <div class="value-item">
+                        <div class="value-badge">ИВЕТА</div>
+                        <div class="value-desc">ИТ Архитектура, разработка на практическите софтуерни модули и менторски програми.</div>
+                    </div>
+
+                    <div class="value-item">
+                        <div class="value-badge">НИЯ</div>
+                        <div class="value-desc">Бизнес стратегия, дизайн на STEM работилниците и изграждане на партньорства с компании.</div>
+                    </div>
+
+                    <div class="value-item">
+                        <div class="value-badge">КАУЗА</div>
+                        <div class="value-desc">100% подкрепа за преодоляване на синдрома на самозванеца сред жените в технологиите.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="perks-section">
+                <div class="perk-item">
+                    <h4>100%</h4>
+                    <p>Практическа работа и реални софтуерни проекти</p>
+                </div>
+                <div class="perk-item">
+                    <h4>1-на-1</h4>
+                    <p>Индивидуално менторство от доказани лидери в индустрията</p>
+                </div>
+                <div class="perk-item">
+                    <h4>Global</h4>
+                    <p>Достъп до международна общност от жени в STEM</p>
+                </div>
+            </div>
+
+            <div class="action-banner">
+                <h3>Твоят STEM път започва оттук!</h3>
+                <p>Запиши се за следващия ни безплатен уебинар и се запознай лично с Ния, Ивета и менторите на академията.</p>
+                <button class="site-cta-btn" onclick="alert('Добре дошла в отбора! Ще се свържем с теб много скоро. ✨')">ЗАПИШИ СЕ СЕГА</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        // 1. ИНТЕРАКТИВЕН МИШКА-ШЛЕЙФ (MOUSE TRAIL EFFECT)
+        window.addEventListener('mousemove', function(e) {
+            if(Math.random() > 0.15) return; // за да не претоварва екрана, пуска искри на произволен принцип
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = e.clientX + 'px';
+            sparkle.style.top = e.clientY + 'px';
+            
+            // Произволен цвят между кибер розово и неоново синьо
+            sparkle.style.backgroundColor = Math.random() > 0.5 ? '#ff79c6' : '#8be9fd';
+            sparkle.style.boxShadow = `0 0 8px ${sparkle.style.backgroundColor}`;
+            
+            document.body.appendChild(sparkle);
+            
+            // Ефект на излитане на искрата
+            setTimeout(() => {
+                sparkle.style.transform = `translate(${(Math.random() - 0.5) * 40}px, ${(Math.random() - 0.5) * 40}px) scale(0)`;
+                sparkle.style.opacity = '0';
+            }, 10);
+            
+            setTimeout(() => { sparkle.remove(); }, 500);
+        });
+
+        // ЖИВ ТЕРМИНАЛ ЕФЕКТ
+        const phrases = [
+            "Loading Niya & Iveta's core...",
+            "Status: Double effort mode ON...",
+            "Breaking stereotypes...",
+            "Compiling future female engineers...",
+            "System status: Ready to disrupt."
+        ];
+        let phraseIdx = 0; let charIdx = 0; let isDeleting = false;
+        const promptEl = document.getElementById("live-coder-prompt");
+
+        function typeEffect() {
+            let currentPhrase = phrases[phraseIdx];
+            if (isDeleting) {
+                promptEl.innerText = "> " + currentPhrase.substring(0, charIdx - 1); charIdx--;
+            } else {
+                promptEl.innerText = "> " + currentPhrase.substring(0, charIdx + 1); charIdx++;
+            }
+
+            let typeSpeed = isDeleting ? 40 : 80;
+            if (!isDeleting && charIdx === currentPhrase.length) {
+                typeSpeed = 2000; isDeleting = true;
+            } else if (isDeleting && charIdx === 0) {
+                isDeleting = false; phraseIdx = (phraseIdx + 1) % phrases.length; typeSpeed = 500;
+            }
+            setTimeout(typeEffect, typeSpeed);
+        }
+        typeEffect();
+
+        function playKeySound() {
+            let osc = audioCtx.createOscillator(); let gain = audioCtx.createGain();
+            osc.type = 'triangle'; osc.frequency.setValueAtTime(Math.random() * 60 + 500, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.01, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.03);
+            osc.connect(gain); gain.connect(audioCtx.destination); osc.start(); osc.stop(audioCtx.currentTime + 0.03);
+        }
+
+        function playBeep(freq, duration) {
+            let osc = audioCtx.createOscillator(); let gain = audioCtx.createGain();
+            osc.type = 'sine'; osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.03, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + duration);
+            osc.connect(gain); gain.connect(audioCtx.destination); osc.start(); osc.stop(audioCtx.currentTime + duration);
+        }
+
+        function playCrashSound() {
+            // Двоен по-мощен звук за краш
+            let osc = audioCtx.createOscillator(); let osc2 = audioCtx.createOscillator(); let gain = audioCtx.createGain();
+            osc.type = 'sawtooth'; osc.frequency.setValueAtTime(300, audioCtx.currentTime);
+            osc.frequency.linearRampToValueAtTime(40, audioCtx.currentTime + 1.8);
+            osc2.type = 'triangle'; osc2.frequency.setValueAtTime(150, audioCtx.currentTime);
+            osc2.frequency.linearRampToValueAtTime(20, audioCtx.currentTime + 1.8);
+            gain.gain.setValueAtTime(0.12, audioCtx.currentTime); gain.gain.linearRampToValueAtTime(0.0001, audioCtx.currentTime + 1.8);
+            osc.connect(gain); osc2.connect(gain); gain.connect(audioCtx.destination); 
+            osc.start(); osc2.start(); osc.stop(audioCtx.currentTime + 1.8); osc2.stop(audioCtx.currentTime + 1.8);
+        }
+
+        function navigateToSysAdmin() {
+            audioCtx.resume();
+            document.getElementById('landing-page').style.display = 'none';
+            document.getElementById('sysadmin-page').style.display = 'grid';
+            playBeep(700, 0.1);
+            setTimeout(() => { document.getElementById('termInput').focus(); }, 100);
+        }
+
+        function triggerSystemCrash() {
+            document.getElementById('welcome-page').style.display = 'none';
+            document.getElementById('history-page').style.display = 'flex';
+            playCrashSound();
+            
+            const crashScreen = document.getElementById('crash-screen');
+            const crashLogs = [
+                " [CRITICAL ALERT] SGA_MAINFRAME OVERLOAD: 404_CORE_DUMP",
+                " EXCEPTION: OVERWHELMING_FEMALE_POWER_DETECTION (0xSGA2026)",
+                " Security layers are bypassing... Initializing Emergency protocols...",
+                " Извличане на резервни криптирани данни от архива...",
+                " [SGA SAFE MODE] Активиране на Скрит Образователен Модул...",
+                " Скритият архив за историята на жените в STEM е отключен!"
+            ];
+
+            let delay = 0;
+            crashLogs.forEach((line, index) => {
+                setTimeout(() => {
+                    const p = document.createElement('p');
+                    p.innerText = line;
+                    if(index < 3) p.style.color = "#ff5555";
+                    else p.style.color = "#ff79c6";
+                    crashScreen.appendChild(p);
+                    playBeep(180 + (index * 70), 0.12);
+                }, delay);
+                delay += 400;
+            });
+
+            setTimeout(() => {
+                crashScreen.style.display = 'none';
+                document.getElementById('historyContainer').style.display = 'block';
+                backgroundMode = "MATRIX";
+                playBeep(900, 0.3);
+            }, delay + 800);
+        }
+
+        function navigateToOfficialSite() {
+            document.getElementById('history-page').style.display = 'none';
+            document.getElementById('main-site-page').style.display = 'flex';
+            backgroundMode = "NEBULA"; 
+            playBeep(1200, 0.2);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // КОНЗОЛА
+        let currentMode = "COMMAND"; let database = null; let tempLoginUser = "";
+        const termInput = document.getElementById('termInput');
+        const terminalLog = document.getElementById('terminalLog');
+        const termPrompt = document.getElementById('termPrompt');
+
+        termInput.addEventListener('input', playKeySound);
+        termInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const rawInput = this.value; const cmd = rawInput.trim(); this.value = '';
+                const div = document.createElement('div');
+                if (currentMode.includes("PASS")) {
+                    div.innerHTML = `<span style="color:#ff79c6">${termPrompt.innerText}</span> ` + "*".repeat(rawInput.length);
+                } else {
+                    div.innerHTML = `<span style="color:#ff79c6">${termPrompt.innerText}</span> ${rawInput}`;
+                }
+                terminalLog.appendChild(div);
+
+                if (currentMode !== "COMMAND") handleWizard(cmd);
+                else handleSystemCommand(cmd.toLowerCase());
+                terminalLog.scrollTop = terminalLog.scrollHeight;
+            }
+        });
+
+        function handleSystemCommand(cmd) {
+            if (!cmd) return;
+            if (cmd === 'register') {
+                currentMode = "REG_USER"; logToTerminal('Избери администраторско име за SGA:'); termPrompt.innerText = "username>";
+            } else if (cmd === 'login') {
+                if (!database) { logToTerminal('<span style="color:#ff5555">[Грешка] Няма база данни. Първо напиши "register".</span>'); return; }
+                currentMode = "LOGIN_USER"; logToTerminal('Потребителско име:'); termPrompt.innerText = "login_user>";
+            } else if (cmd === 'clear') { terminalLog.innerHTML = ''; }
+            else { logToTerminal(`[Грешка] Непозната команда: '${cmd}'`); }
+        }
+
+        function handleWizard(input) {
+            if (currentMode === "REG_USER") {
+                database = { username: input, password: "" }; currentMode = "REG_PASS";
+                logToTerminal('Създай защитена парола:'); termPrompt.innerText = "password>"; termInput.type = "password";
+            } else if (currentMode === "REG_PASS") {
+                database.password = input; termInput.type = "text"; termPrompt.innerText = "sga_admin@mainframe:~#"; currentMode = "COMMAND";
+                logToTerminal('<span style="color:#8be9fd">[УСПЕШНО] Профилът е създаден в SGA. Напиши "login" за достъп.</span>');
+            } else if (currentMode === "LOGIN_USER") {
+                tempLoginUser = input; currentMode = "LOGIN_PASS"; logToTerminal('Въведи парола:'); termPrompt.innerText = "login_pass>"; termInput.type = "password";
+            } else if (currentMode === "LOGIN_PASS") {
+                termInput.type = "text"; termPrompt.innerText = "sga_admin@mainframe:~#"; currentMode = "COMMAND";
+                if (tempLoginUser === database.username && input === database.password) {
+                    document.getElementById('welcome-username').innerText = database.username.toUpperCase();
+                    document.getElementById('sysadmin-page').style.display = 'none';
+                    document.getElementById('welcome-page').style.display = 'flex';
+                    playBeep(1100, 0.3);
+                } else { logToTerminal('<span style="color:#ff5555">[Грешка] Грешна парола за достъп.</span>'); }
+            }
+        }
+
+        function logToTerminal(text) { const div = document.createElement('div'); div.innerHTML = text; terminalLog.appendChild(div); }
+
+        // CANVAS BACKGROUND
+        const canvas = document.getElementById('cyberCanvas'); const ctx = canvas.getContext('2d');
+        let w = canvas.width = window.innerWidth; let h = canvas.height = window.innerHeight;
+        let backgroundMode = "NEBULA";
+        const alphabet = "01✨👩‍💻⚡STAMGIRLS"; const fontSize = 14;
+        let columns = Math.floor(w / fontSize); const rainDrops = Array(columns).fill(1);
+
+        window.addEventListener('resize', () => { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; columns = Math.floor(w / fontSize); });
+
+        function animate() {
+            if (backgroundMode === "NEBULA") {
+                ctx.fillStyle = 'rgba(6, 2, 15, 0.2)'; ctx.fillRect(0, 0, w, h);
+            } else {
+                ctx.fillStyle = 'rgba(6, 2, 15, 0.05)'; ctx.fillRect(0, 0, w, h); 
+                ctx.fillStyle = '#ff79c6'; ctx.font = fontSize + 'px monospace';
+                for (let i = 0; i < rainDrops.length; i++) {
+                    const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length)); 
+                    ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+                    if (rainDrops[i] * fontSize > h && Math.random() > 0.975) rainDrops[i] = 0; rainDrops[i]++;
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+</body>
+</html>
