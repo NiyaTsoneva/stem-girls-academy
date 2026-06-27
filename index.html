@@ -108,24 +108,25 @@
 
         .top-row { display: flex; justify-content: space-between; width: 100%; gap: 15px; }
         
-        /* 🚀 GLOBAL HERO BLOCK - CENTERING LAYOUT ENGINE */
+        /* 🚀 SIDE-BY-SIDE PERFECT ALIGNMENT ENGINE */
         .hero-section { 
             margin-top: auto; 
             margin-bottom: auto; 
             width: 100%;
-            max-width: 1100px; 
-            align-self: center; /* Центрира цялата секция в средата на екрана */
+            max-width: 1350px; 
+            align-self: flex-start;
             padding: 20px 0;
             display: flex;
-            flex-direction: column;
-            align-items: center; /* Перфектно центриране по хоризонтала за логото и текстовете */
-            text-align: center; /* Центрира редовете на заглавието */
+            flex-direction: row; /* Нарежда логото и текста на един ред */
+            align-items: center; /* Центрира ги вертикално едно спрямо друго */
+            gap: 45px; /* Разстоянието между логото и надписа */
+            text-align: left;
         }
         
         .brand-logo-container {
             width: 100%;
-            max-width: 400px; /* Премиум, зашеметяващ и ясен мащаб */
-            margin-bottom: 35px;
+            max-width: 320px; /* Размерът на логото вляво */
+            flex-shrink: 0; /* Предпазва логото от смачкване на по-малки екрани */
             animation: cardSpawn 1s cubic-bezier(0.16, 1, 0.3, 1), neonPulse 3s ease-in-out infinite alternate;
         }
         
@@ -135,14 +136,22 @@
             border-radius: 12px;
         }
 
+        .hero-text-block {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
         /* РОБОТИЗИРАНО НЕОНОВО ПУЛСИРАНЕ НА ЛОГОТО */
         @keyframes neonPulse {
             0% { filter: drop-shadow(0 0 15px rgba(255, 121, 198, 0.35)) drop-shadow(0 0 30px rgba(139, 233, 253, 0.2)); }
             100% { filter: drop-shadow(0 0 35px rgba(255, 121, 198, 0.7)) drop-shadow(0 0 60px rgba(139, 233, 253, 0.45)); }
         }
 
-        @media (max-width: 768px) {
-            .brand-logo-container { max-width: 280px; margin-bottom: 25px; }
+        @media (max-width: 950px) {
+            .hero-section { flex-direction: column; text-align: center; align-items: center; gap: 25px; }
+            .hero-text-block { align-items: center; }
+            .brand-logo-container { max-width: 240px; }
         }
 
         .main-gradient-title {
@@ -512,17 +521,19 @@
             </div>
         </div>
         
-        <!-- 📐 PERFECTLY CENTERED HERO STRUCTURE -->
+        <!-- 📐 SIDE-BY-SIDE SIDEBAR CONTAINER ENGINE -->
         <div class="hero-section">
-            <!-- 🖼️ THE LOGO IS NOW PLACED DIRECTLY IN THE MIDDLE, ABOVE THE MAIN TITLE -->
+            <!-- 🖼️ THE LOGO STANDS CLEANLY COMMITTED ON THE LEFT SIDE -->
             <div class="brand-logo-container">
                 <img src="logo.png" alt="STEM Girls Academy Official Logo">
             </div>
-            
-            <h1 class="main-gradient-title">DECODE THE STEREOTYPES.<br>SHAPE THE FUTURE.</h1>
-            <p style="color: var(--secondary); font-family: var(--font-mono); font-size: 11px; letter-spacing: 5px; font-weight: 700; text-shadow: 0 0 10px rgba(139, 233, 253, 0.4);">
-                [ ENTERPRISE ECOSYSTEM DESIGNED BY FEMALE ENGINEERS FOR INDUSTRIAL SCALE LEADERSHIP ]
-            </p>
+
+            <div class="hero-text-block">
+                <h1 class="main-gradient-title">DECODE THE STEREOTYPES.<br>SHAPE THE FUTURE.</h1>
+                <p style="color: var(--secondary); font-family: var(--font-mono); font-size: 11px; letter-spacing: 5px; font-weight: 700; text-shadow: 0 0 10px rgba(139, 233, 253, 0.4);">
+                    [ ENTERPRISE ECOSYSTEM DESIGNED BY FEMALE ENGINEERS FOR INDUSTRIAL SCALE LEADERSHIP ]
+                </p>
+            </div>
         </div>
         
         <div class="bottom-row">
@@ -1243,7 +1254,7 @@
         const canvas = document.getElementById('cyberCanvas'); const ctx = canvas.getContext('2d');
         let w = canvas.width = window.innerWidth; let h = canvas.height = window.innerHeight;
         let backgroundMode = "NEBULA";
-        const alphabet = "01✨👩‍💻⚡STEMGIRLS"; const fontSize = 14;
+        const alphabet = "01✨👩+.🚀⚡STEMGIRLS"; const fontSize = 14;
         let columns = Math.floor(w / fontSize); const rainDrops = Array(columns).fill(1);
 
         window.addEventListener('resize', () => { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; columns = Math.floor(w / fontSize); });
