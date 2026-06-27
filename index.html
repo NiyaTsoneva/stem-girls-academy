@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="bg">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,7 +21,7 @@
             scroll-behavior: smooth;
         }
 
-        /* КИБЕР РОЗОВ ФОН */
+        /* CANVAS BACKGROUND */
         canvas {
             position: fixed;
             top: 0;
@@ -33,7 +33,7 @@
             pointer-events: none;
         }
 
-        /* ИСКРИ ПОД МИШКАТА */
+        /* MOUSE TRAIL SPARKLES */
         .sparkle {
             position: fixed;
             width: 4px;
@@ -126,7 +126,7 @@
             transform: scale(1.05) translateY(-3px);
         }
 
-        /* SYSADMIN ПАНЕЛ */
+        /* SYSADMIN PANEL */
         #sysadmin-page {
             display: none;
             background: rgba(6, 2, 15, 0.94);
@@ -174,7 +174,7 @@
         .terminal-input-row { display: flex; align-items: center; gap: 8px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 10px; }
         .terminal-input { flex-grow: 1; background: transparent; border: none; outline: none; color: #50fa7b; font-family: inherit; font-size: 13px; }
 
-        /* WELCOME СТРАНИЦА */
+        /* WELCOME CARD */
         #welcome-page {
             display: none;
             background: rgba(5, 2, 9, 0.96);
@@ -203,34 +203,31 @@
 
         .enter-dash-btn {
             background: #ff79c6; color: #050209; border: none; padding: 14px 28px; border-radius: 8px;
-            font-weight: bold; letter-spacing: 2px; cursor: pointer; width: 100%; transition: 0.3s;
+            font-weight: bold; letter-spacing: 2px; cursor: pointer; width: 100%; transition: 0.3s; text-transform: uppercase;
         }
         .enter-dash-btn:hover { background: #8be9fd; box-shadow: 0 0 25px #8be9fd; }
 
-        /* СТРАНИЦА КРАШ / ИСТОРИЯ НА ОСНОВАТЕЛКИТЕ */
+        /* CRASH SIMULATION & ARCHIVE */
         #history-page {
             display: none;
             background: #06020f;
             color: #ff5555;
             z-index: 200;
-            padding: 20px 15px; 
-            min-height: 100vh;  
-            width: 100%;
-            overflow-y: visible; 
+            padding: 40px;
+            overflow-y: auto;
             flex-direction: column;
             align-items: center;
         }
-        
+
         .history-container {
             max-width: 850px;
             width: 100%;
             border: 2px solid #ff79c6;
             border-radius: 16px;
             background: linear-gradient(135deg, rgba(25, 5, 40, 0.95) 0%, rgba(6, 2, 15, 0.98) 100%);
-            padding: 30px 20px;
+            padding: 40px;
             box-shadow: 0 0 60px rgba(255, 121, 198, 0.25);
             display: none;
-            margin-bottom: 50px;
         }
 
         .history-title {
@@ -238,13 +235,13 @@
             border-bottom: 2px dashed #ff79c6; padding-bottom: 15px; text-transform: uppercase; text-align: center;
         }
 
-        .founder-card { margin-bottom: 25px; border-left: 4px solid #8be9fd; padding-left: 20px; color: #e2d9f3; }
+        .founder-card { margin-bottom: 25px; border-left: 4px solid #8be9fd; padding-left: 20px; color: #e2d9f3; text-align: left; }
         .founder-name { font-size: 18px; color: #8be9fd; font-weight: bold; margin-bottom: 5px; }
         .founder-role { font-size: 11px; color: #ff79c6; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; font-weight: bold; }
 
         #crash-screen { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; width: 100%; font-size: 16px; line-height: 2; }
 
-        /* ОФИЦИАЛЕН БИЗНЕС САЙТ */
+        /* OFFICIAL PLATFORM PROFILE */
         #main-site-page {
             display: none;
             position: relative;
@@ -289,7 +286,7 @@
         .service-card h3 { font-size: 20px; color: #8be9fd; margin-bottom: 15px; font-family: sans-serif; font-weight: 700; }
         .service-card p { color: #ccc; font-size: 14px; line-height: 1.6; font-family: sans-serif; }
 
-        /* ОФИЦИАЛНА СЕКЦИЯ: "ЗА НАС" */
+        /* ABOUT US SECTION */
         .about-section {
             display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 50px;
             background: linear-gradient(135deg, rgba(25, 5, 50, 0.7) 0%, rgba(10, 2, 20, 0.9) 100%);
@@ -302,14 +299,14 @@
         @media (max-width: 768px) { .about-section { grid-template-columns: 1fr; padding: 30px; } }
 
         .about-text h3 { font-size: 28px; color: #ff79c6; margin-bottom: 25px; font-family: sans-serif; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
-        .about-text p { color: #e2d9f3; font-size: 15px; line-height: 1.8; margin-bottom: 20px; font-family: sans-serif; }
+        .about-text p { color: #e2d9f3; font-size: 15px; line-height: 1.8; margin-bottom: 20px; font-family: sans-serif; text-align: left; }
         
         .motivation-quote {
             border-left: 4px solid #50fa7b; padding-left: 20px; font-style: italic;
-            color: #50fa7b; font-size: 16px; line-height: 1.6; margin: 25px 0; font-family: sans-serif;
+            color: #50fa7b; font-size: 16px; line-height: 1.6; margin: 25px 0; font-family: sans-serif; text-align: left;
         }
 
-        .values-list { display: flex; flex-direction: column; gap: 15px; }
+        .values-list { display: flex; flex-direction: column; gap: 15px; text-align: left; }
         .value-item { display: flex; align-items: center; gap: 15px; background: rgba(0,0,0,0.4); padding: 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.03); }
         .value-badge { background: #8be9fd; color: #000; font-weight: bold; padding: 6px 14px; border-radius: 6px; font-size: 11px; letter-spacing: 1px; }
         .value-desc { font-family: sans-serif; font-size: 14px; color: #fff; line-height: 1.4; }
@@ -337,6 +334,27 @@
         }
         .site-cta-btn:hover { background: #fff; color: #06020f; transform: scale(1.05); }
 
+        /* GLOBAL TRACKS DASHBOARD */
+        #dashboard-page { display: none; position: relative; z-index: 100; max-width: 1100px; margin: 40px auto; padding: 20px; color:#fff; }
+        .dash-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin: 30px 0; text-align: left; }
+        .dash-card { background: #120721; border: 1px solid #333; border-radius: 14px; padding: 25px; display: flex; flex-direction: column; justify-content: space-between; }
+        .card-btn { display: block; width: 100%; margin-top: 15px; border: none; padding: 12px; border-radius: 6px; font-family: 'Space Mono'; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 12px; }
+
+        /* AI MENTOR HUB */
+        #ai-chat-section { display: none; max-width: 850px; margin: 40px auto; border: 2px solid #ff79c6; border-radius: 12px; background: #0d061a; position: relative; z-index: 120; }
+        .chat-body { height: 350px; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; text-align: left; }
+        .msg { padding: 12px 16px; border-radius: 8px; max-width: 80%; font-size: 14px; }
+        .msg-ai { background: rgba(255, 121, 198, 0.1); border: 1px solid #ff79c6; color: #ff79c6; align-self: flex-start; }
+        .msg-user { background: rgba(139, 233, 253, 0.1); border: 1px solid #8be9fd; color: #8be9fd; align-self: flex-end; }
+
+        /* SANDBOX LAB */
+        #lab-section { display: none; max-width: 1200px; margin: 30px auto; padding: 0 20px; position: relative; z-index: 130; }
+        .lab-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; height: 500px; }
+        @media (max-width: 900px) { .lab-container { grid-template-columns: 1fr; height: auto; } }
+        .video-pane { background: #140a24; border: 1px solid #333; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; color:#fff; }
+        .video-mock { width: 100%; height: 260px; background: #000 url('https://img.youtube.com/vi/bX7m8_vJIdg/0.jpg') center/cover no-repeat; border-radius: 8px; display: flex; justify-content: center; align-items: center; }
+        .play-btn { width: 60px; height: 60px; background: #ff79c6; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 20px; color: #000; }
+
         @keyframes cardSpawn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
         @keyframes flowColors { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
         @keyframes blink { 50% { border-color: transparent; } }
@@ -346,28 +364,28 @@
 
     <canvas id="cyberCanvas"></canvas>
 
-    <!-- СТРАНИЦА 1: LANDING С ЖИВ ТЕРМИНАЛ -->
+    <!-- SECTION 1: LANDING INTERFACE -->
     <div class="page-layer" id="landing-page">
         <div class="top-row">
             <div class="hud-text">
                 // PLATFORM: <span class="hud-highlight">STEM GIRLS ACADEMY</span><br>
                 // FOUNDERS: <span class="hud-highlight">NIYA & IVETA</span><br>
-                <span id="live-coder-prompt">> Инициализиране...</span>
+                <span id="live-coder-prompt">> Initializing System Nodes...</span>
             </div>
         </div>
         <div class="hero-section">
             <h1 class="main-gradient-title">DECODE THE STEREOTYPES.<br>SHAPE THE FUTURE.</h1>
             <p style="color: #8be9fd; font-size: 12px; letter-spacing: 4px; font-weight: bold; text-shadow: 0 0 8px #8be9fd;">
-                [ НАПРАВЕНО ЗА БЪДЕЩИ ЛИДЕРИ ]
+                [ BUILT BY FEMALE SOFTWARE ARCHITECTS FOR FUTURE LEADERS ]
             </p>
         </div>
         <div class="bottom-row">
             <div class="hud-text">SGA.CORE.v2.0.26</div>
-            <button class="cta-button" onclick="navigateToSysAdmin()">СТАРТИРАЙ СИСТЕМАТА →</button>
+            <button class="cta-button" onclick="navigateToSysAdmin()">START SYSTEM CORE →</button>
         </div>
     </div>
 
-    <!-- СТРАНИЦА 2: SYSADMIN ТАБЛО -->
+    <!-- SECTION 2: OPERATION CONTROL CENTER -->
     <div class="page-layer" id="sysadmin-page">
         <div class="sys-header">
             <div class="hud-text">// SGA SECURITY OPERATIONS CENTER</div>
@@ -375,13 +393,13 @@
 
         <div class="column-left">
             <div class="sys-box">
-                <div class="box-title">АКТИВНИ ЯДРА</div>
+                <div class="box-title">ACTIVE MAIN CORES</div>
                 <div class="server-blade"><span>[STEM-01] sga-education-core</span><span><span class="led"></span> ONLINE</span></div>
                 <div class="server-blade"><span>[DB-02] secure-girls-database</span><span><span class="led"></span> ONLINE</span></div>
             </div>
 
             <div class="sys-box">
-                <div class="box-title">КРИПТО РЕСУРСИ</div>
+                <div class="box-title">CRYPTOGRAPHIC RESOURCES</div>
                 <div style="font-size:11px; margin-bottom:6px; color:#aaa;">SGA GPU LOAD: <span style="color:#50fa7b">18%</span></div>
                 <div style="font-size:11px; color:#aaa;">RAM ALLOCATED: <span style="color:#8be9fd">35%</span></div>
             </div>
@@ -390,13 +408,13 @@
         <div class="column-right">
             <div class="sys-box" style="flex-grow: 1; background: #030107;">
                 <div class="box-title" style="display: flex; justify-content: space-between;">
-                    <span>ДИГИТАЛЕН ТЕРМИНАЛ</span>
-                    <span style="color: #8be9fd;" id="register-badge">[ Напиши 'register' ]</span>
+                    <span>DIGITAL MAINFRAME TERMINAL</span>
+                    <span style="color: #8be9fd;" id="register-badge">[ Type 'register' ]</span>
                 </div>
                 <div class="terminal-container">
                     <div class="terminal-log" id="terminalLog">
-                        <div>[SYSTEM] Криптирана връзка със STEM Girls Academy: УСПЕШНА.</div>
-                        <div>[SYSTEM] Напиши <span style="color:#8be9fd">register</span> за нов админ профил, след това <span style="color:#8be9fd">login</span>.</div>
+                        <div>[SYSTEM] Encrypted mainframe secure uplink handshake: SUCCESSFUL.</div>
+                        <div>[SYSTEM] Please input <span style="color:#8be9fd">register</span> to configure a new administrator, then <span style="color:#8be9fd">login</span>.</div>
                     </div>
                     <div class="terminal-input-row">
                         <span style="color: #ff79c6; font-weight: bold;" id="termPrompt">sga_admin@mainframe:~#</span>
@@ -407,116 +425,116 @@
         </div>
     </div>
 
-    <!-- СТРАНИЦА 3: WELCOME ЕКРАН -->
+    <!-- SECTION 3: ACCESS GRANTED COMPONENT -->
     <div class="page-layer" id="welcome-page">
         <div class="welcome-card">
             <div style="font-size: 32px; margin-bottom: 15px;">✨</div>
             <h2 class="welcome-title">ACCESS GRANTED</h2>
-            <p style="color: #8be9fd; font-size: 13px; margin-bottom: 15px;">Добре дошла в ядрото на STEM Girls Academy!</p>
+            <p style="color: #8be9fd; font-size: 13px; margin-bottom: 15px;">Welcome to the structural core of STEM Girls Academy!</p>
             <div class="sys-info-table">
-                <div class="info-row"><span class="info-label">АДМИНИСТРАТОР:</span><span class="info-value" id="welcome-username">USER</span></div>
-                <div class="info-row"><span class="info-label">СТАТУС:</span><span class="info-value" style="color: #50fa7b;">[ LEAD FUTURE ENGINEER ]</span></div>
+                <div class="info-row"><span class="info-label">ADMINISTRATOR NAME:</span><span class="info-value" id="welcome-username">USER</span></div>
+                <div class="info-row"><span class="info-label">CLEARANCE LEVEL:</span><span class="info-value" style="color: #50fa7b;">[ LEAD FUTURE ENGINEER ]</span></div>
             </div>
-            <button class="enter-dash-btn" onclick="triggerSystemCrash()">ВЛЕЗ В СИСТЕМНОТО ТАБЛО</button>
+            <button class="enter-dash-btn" onclick="triggerSystemCrash()">Enter System Dashboard</button>
         </div>
     </div>
 
-    <!-- СТРАНИЦА 4: КРАШ СИМУЛАЦИЯ & АРХИВ -->
+    <!-- SECTION 4: ARCHIVE DISCOVERY -->
     <div class="page-layer" id="history-page">
         <div id="crash-screen"></div>
 
         <div class="history-container" id="historyContainer">
-            <h2 class="history-title">🔒 СКРИТ АРХИВ: ЖЕНИТЕ, КОИТО СЪЗДАДОХА STEM СВЕТА</h2>
+            <h2 class="history-title">🔒 SECURE ARCHIVE: THE WOMEN WHO ARCHITECTED THE STEM WORLD</h2>
             
             <div class="founder-card">
-                <div class="founder-name">Ada Lovelace (Ада Лъвлейс)</div>
-                <div class="founder-role">Първият компютърен програмист в историята (1843 г.)</div>
-                <p>Тя написва първия алгоритъм за машина. Ада първа прозира, че компютрите могат да създават музика, изкуство и сложен софтуер.</p>
+                <div class="founder-name">Ada Lovelace</div>
+                <div class="founder-role">First Computer Programmer in History (1843)</div>
+                <p>She authored the world's first machine algorithm. Ada was the first to recognize that computers could synthesize music, art, and complex multi-role software systems.</p>
             </div>
 
             <div class="founder-card">
-                <div class="founder-name">Grace Hopper (Грейс Хопър)</div>
-                <div class="founder-role">Пионер в софтуера & Майка на термина "Бъг"</div>
-                <p>Адмирал от флота, Грейс създава първия в света компилатор – технологията, превеждаща думите ни в компютърен код.</p>
+                <div class="founder-name">Grace Hopper</div>
+                <div class="founder-role">Software Pioneer & Mother of the term "BUG"</div>
+                <p>A naval admiral, Grace created the first operational compiler—the foundational technology translating human commands into executable computer code.</p>
             </div>
 
             <div class="founder-card">
-                <div class="founder-name">Radia Perlman (Радия Пърлман)</div>
-                <div class="founder-role">Майката на Интернет</div>
-                <p>Изобретява протокола STP (Spanning Tree Protocol), който предпазва глобалната мрежа от постоянен срив и управлява интернет трафика.</p>
+                <div class="founder-name">Radia Perlman</div>
+                <div class="founder-role">The Mother of Internet Protocols</div>
+                <p>Invented the Spanning Tree Protocol (STP), preventing global network deadlocks and safely structuring standard internet traffic routing loops.</p>
             </div>
 
             <button class="enter-dash-btn" style="margin-top: 30px; background: #8be9fd; color: #000;" onclick="navigateToOfficialSite()">
-                ПРОДЪЛЖИ КЪМ ОФИЦИАЛНИЯ САЙТ →
+                Proceed to Official Platform →
             </button>
         </div>
     </div>
 
-    <!-- ОФИЦИАЛЕН БИЗНЕС САЙТ -->
+    <!-- SECTION 5: OFFICIAL CORE PLATFORM -->
     <div id="main-site-page">
         <div class="site-container">
             <nav class="site-nav">
                 <div class="site-logo">STEM_GIRLS_<span>ACADEMY</span></div>
                 <div>
-                    <a href="#about-us-anchor">НАШАТА ИСТОРИЯ ↓</a>
+                    <a href="#about-us-anchor">OUR MISSION HISTORY ↓</a>
                 </div>
             </nav>
 
             <div class="business-intro">
-                <h2>Какво Предлагаме?</h2>
-                <p>Ние изграждаме следващото поколение жени лидери в технологиите, инженерството и науката чрез интерактивни и достъпни образователни програми.</p>
+                <h2>Ecosystem Capabilities</h2>
+                <p>We train and accelerate the next generation of global female leaders in engineering, data systems, and product architecture through high-fidelity simulation programs.</p>
             </div>
 
             <div class="services-grid">
                 <div class="service-card">
                     <div class="service-icon">💻</div>
-                    <h3>Системна Администрация & DevOps</h3>
-                    <p>Практически курсове по компютърни мрежи (Networking), управление на Linux сървъри и съвременни DevOps технологии за автоматизация.</p>
+                    <h3>Systems Administration & DevOps</h3>
+                    <p>Practical specialized workshops handling networking architectures, Linux administration setups, and automated modern deployment infrastructure models.</p>
                 </div>
 
                 <div class="service-card">
                     <div class="service-icon">🤖</div>
-                    <h3>Роботика & STEM Работилници</h3>
-                    <p>Интерактивни сесии по хардуерно инженерство, 3D моделиране и роботика, развиващи инженерното и логическо мислене.</p>
+                    <h3>Robotics & STEM Labs</h3>
+                    <p>Interactive engineering sessions mapped around hardware deployments, rapid 3D prototyping environments, and core mechanical engineering concepts.</p>
                 </div>
 
                 <div class="service-card">
                     <div class="service-icon">🚀</div>
-                    <h3>Менторство & Кариерен старт</h3>
-                    <p>Директна връзка с успешни дами от ИТ сектора. Подкрепа при изграждане на портфолио, подготовка за интервюта и кариерно ориентиране.</p>
+                    <h3>Strategic Mentorship Track</h3>
+                    <p>Direct live matching channels paired with dominant female tech figures. Specialized focus blocks handling pipeline architectures and interview parameters.</p>
                 </div>
             </div>
 
-            <!-- СЕКЦИЯ: ЗА НАС -->
+            <!-- ABOUT US TRACK -->
             <div id="about-us-anchor" style="padding-top: 20px;"></div>
             <div class="about-section">
                 <div class="about-text">
-                    <h3>За Нас и Нашата Кауза</h3>
-                    <p>Ние сме <strong>Ния и Ивета</strong>. Като момичета, които в момента едновременно учат и работят в технологичния свят, ежедневно се сблъшаваме с една реалност: <strong>нуждата да се доказваш двойно по-силно</strong>, за да бъде чут гласът ти.</p>
+                    <h3>About Us & Our Core Mission</h3>
+                    <p>We are <strong>Niya and Iveta</strong>. As computer engineering students who simultaneously navigate corporate tech spaces, we encounter a singular systemic truth: <strong>the necessity to deliver double the execution output</strong> just to command equity of voice.</p>
                     
-                    <p>Точно затова създадохме <strong>STEM Girls Academy</strong>. Нашата мисия е да разбием стереотипите и да докажем на всички, че жените специалисти са невероятно добри, иновативни и напълно готови да водят технологичната индустрия напред.</p>
+                    <p>That is precisely why we constructed <strong>STEM Girls Academy</strong>. Our mandate is to permanently decode structural biases and demonstrate that diverse engineering teams develop higher-yield software systems.</p>
                     
                     <div class="motivation-quote">
-                        "Кодът няма пол. Ние не просто предаваме знания – ние изграждаме увереност, превръщайки всяко момиче в равноправен и силен играч на дигиталната сцена."
+                        "Code knows no gender. We don't just distribute technical knowledge; we cultivate absolute engineering authority, placing women directly onto the global engineering stage."
                     </div>
                 </div>
 
                 <div class="values-list">
-                    <div style="font-size: 11px; letter-spacing: 2px; color: #ff79c6; margin-bottom: 10px; font-weight: bold;">// ФОКУС НА ЕКИПА</div>
+                    <div style="font-size: 11px; letter-spacing: 2px; color: #ff79c6; margin-bottom: 10px; font-weight: bold;">// OPERATIONAL FOCUS</div>
                     
                     <div class="value-item">
-                        <div class="value-badge">ИВЕТА</div>
-                        <div class="value-desc">ИТ Архитектура, разработка на практическите софтуерни модули и менторски програми.</div>
+                        <div class="value-badge">IVETA</div>
+                        <div class="value-desc">IT Architecture, automated sandbox module generation, and curriculum engineering patterns.</div>
                     </div>
 
                     <div class="value-item">
-                        <div class="value-badge">НИЯ</div>
-                        <div class="value-desc">Бизнес стратегия, дизайн на STEM работилниците и изграждане на партньорства с компании.</div>
+                        <div class="value-badge">NIYA</div>
+                        <div class="value-desc">Corporate growth frameworks, full-scale ecosystem strategy, and strategic industry alignment pipelines.</div>
                     </div>
 
                     <div class="value-item">
-                        <div class="value-badge">КАУЗА</div>
-                        <div class="value-desc">100% подкрепа за преодоляване на синдрома на самозванеца сред жените в технологиите.</div>
+                        <div class="value-badge">CAUSE</div>
+                        <div class="value-desc">100% committed framework metrics targeting impostor syndrome metrics among incoming female tech assets.</div>
                     </div>
                 </div>
             </div>
@@ -524,44 +542,114 @@
             <div class="perks-section">
                 <div class="perk-item">
                     <h4>100%</h4>
-                    <p>Практическа работа и реални софтуерни проекти</p>
+                    <p>Practical Simulation Tasks</p>
                 </div>
                 <div class="perk-item">
-                    <h4>1-на-1</h4>
-                    <p>Индивидуално менторство от доказани лидери в индустрията</p>
+                    <h4>1-on-1</h4>
+                    <p>Dedicated Industry Mentorship</p>
                 </div>
                 <div class="perk-item">
                     <h4>Global</h4>
-                    <p>Достъп до международна общност от жени в STEM</p>
+                    <p>Cross-Border Professional Network</p>
                 </div>
             </div>
 
             <div class="action-banner">
-                <h3>Твоят STEM път започва оттук!</h3>
-                <p>Запиши се за следващия ни безплатен уебинар и се запознай лично с Ния, Ивета и менторите на академията.</p>
-                <button class="site-cta-btn" onclick="alert('Добре дошла в отбора! Ще се свържем с теб много скоро. ✨')">ЗАПИШИ СЕ СЕГА</button>
+                <h3>Your Technical Track Begins Here</h3>
+                <p>Initialize entry into the cross-role digital hub and interface immediately with live production-grade labs.</p>
+                <button class="site-cta-btn" onclick="openAcademyDashboard()">Access Global Tracks Now</button>
             </div>
         </div>
     </div>
 
+    <!-- SECTION 6: GLOBAL TRACKS INTERFACE -->
+    <div id="dashboard-page">
+        <header style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #ff79c6; padding-bottom: 20px; margin-bottom: 40px;">
+            <h1 style="color: #ff79c6; margin: 0; font-size: 24px;">🚀 STEM Girls Academy // Global Tracks</h1>
+            <span style="color: #ff5555; cursor: pointer; font-size:14px; font-weight:bold;" onclick="location.reload()">[ Exit Hub ]</span>
+        </header>
+        <h2 style="color: #f8f8f2; margin-bottom: 25px; font-size: 18px; border-left: 3px solid #ff79c6; padding-left: 10px; text-align:left;">Select Specialization Pathway:</h2>
+        
+        <div class="dash-grid">
+            <div class="dash-card card-blue">
+                <div><h3 style="color: #8be9fd; margin-bottom: 8px;">💻 Software Engineering</h3><p style="font-size:13px; color:#ccc; line-height:1.4;">Master algorithmic logic and full-stack enterprise paradigms using modern languages.</p></div>
+                <button class="card-btn" style="background:#8be9fd; color:#000;" onclick="alert('Software Engineering track activates in Version 1.0!')">Explore Track →</button>
+            </div>
+            <div class="dash-card card-pink">
+                <div><h3 style="color: #ff79c6; margin-bottom: 8px;">⚙️ DevOps & Infrastructure</h3><p style="font-size:13px; color:#ccc; line-height:1.4;">Construct pipeline automation, container clusters, and isolate system cloud variables.</p></div>
+                <button class="card-btn" style="background:#ff79c6; color:#000;" onclick="openSandboxLab()">Enter Sandbox Lab →</button>
+            </div>
+            <div class="dash-card card-yellow">
+                <div><h3 style="color: #f1fa8c; margin-bottom: 8px;">🤖 Data Science & AI</h3><p style="font-size:13px; color:#ccc; line-height:1.4;">Train complex deep neural networks and process telemetry metrics for modern LLMs.</p></div>
+                <button class="card-btn" style="background:#f1fa8c; color:#000;" onclick="alert('AI & Data track activates in Version 1.0!')">Explore Track →</button>
+            </div>
+            <div class="dash-card card-purple">
+                <div><h3 style="color: #bd93f9; margin-bottom: 8px;">🎨 UI/UX & Product Architecture</h3><p style="font-size:13px; color:#ccc; line-height:1.4;">Wireframe immersive layout interactions backed completely by product lifecycle data models.</p></div>
+                <button class="card-btn" style="background:#bd93f9; color:#000;" onclick="alert('Product Architecture track activates in Version 1.0!')">Explore Track →</button>
+            </div>
+            <div class="dash-card card-orange">
+                <div><h3 style="color: #ffb86c; margin-bottom: 8px;">💬 24/7 AI Mentor Engine</h3><p style="font-size:13px; color:#ccc; line-height:1.4;">Interface directly with an instant intelligent agent to review structure bugs across any node.</p></div>
+                <button class="card-btn" style="background:#ffb86c; color:#000;" onclick="openAIMentorChat()">Launch AI Agent →</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 7: AI LIVE CHAT DRIVER -->
+    <section id="ai-chat-section">
+        <div style="background: #190528; padding: 15px; border-bottom: 1px solid #ff79c6; display:flex; justify-content:space-between; border-radius: 12px 12px 0 0;">
+            <span style="color:#ff79c6; font-size:13px; font-weight:bold;">🤖 STEM Universal AI Mentor [Online]</span>
+            <button style="background:transparent; border:none; color:#ff5555; font-weight:bold; cursor:pointer; font-family:'Space Mono';" onclick="closeSubPanel('ai-chat-section')">[X] Close</button>
+        </div>
+        <div class="chat-body" id="chat-messages-container">
+            <div class="msg msg-ai">Hi Niya! I'm your dedicated AI Mentor Hub. I can systematically inspect full-stack code blocks, container architecture, or product wireframes. What bug are we neutralizing today?</div>
+        </div>
+        <div style="display: flex; padding: 15px; background: #140a24; border-top: 1px solid #333; border-radius: 0 0 12px 12px;">
+            <input type="text" id="chat-user-input" class="terminal-input" style="color: #ff79c6;" placeholder="Type a challenge context query here...">
+            <button style="background:#ff79c6; border:none; color:#000; padding:10px 20px; font-weight:bold; border-radius:4px; cursor:pointer; font-family:'Space Mono';" onclick="sendChatMessage()">SEND</button>
+        </div>
+    </section>
+
+    <!-- SECTION 8: DEV-OPS SANDBOX LAYER -->
+    <section id="lab-section">
+        <header style="display: flex; justify-content: space-between; border-bottom: 2px solid #8be9fd; padding-bottom: 20px; margin-bottom: 30px;">
+            <h2 style="color: #8be9fd; font-size: 20px;">🎬 Lab #3: Production Server Automation Architecture</h2>
+            <button style="background:transparent; border:1px solid #ff5555; color:#ff5555; padding:5px 15px; cursor:pointer; font-family:'Space Mono';" onclick="closeSubPanel('lab-section')">← Back to Hub</button>
+        </header>
+        <div class="lab-container">
+            <div class="video-pane">
+                <div class="video-mock"><div class="play-btn" onclick="alert('Streaming tutorial environment layer...')">▶</div></div>
+                <div style="margin-top: 15px;">
+                    <h4 style="color:#8be9fd; margin-bottom:5px; text-align:left;">Practical Sandbox Instruction:</h4>
+                    <p style="font-size:13px; color:#ccc; line-height:1.5; text-align:left;">Execute terminal permissions to enforce real-time directory security. Type the operational command <code style="color:#ff79c6;">chmod 600 secure_data.txt</code> inside the cloud sandbox shell to override unsafe data exposure vulnerabilities, then hit Enter.</p>
+                </div>
+            </div>
+            <div class="terminal-container" style="max-width:100%; height:100%; margin:0;">
+                <div class="terminal-body" id="lab-terminal-output" style="background:#030107; height:100%;">
+                    <div>ubuntu@devops-sandbox-3:~$ ls -l</div>
+                    <div>-rw-r--r-- 1 ubuntu devops 42 secure_data.txt</div>
+                    <div class="terminal-input-row" style="margin-top:15px;">
+                        <span style="color: #ff79c6; font-weight: bold;">ubuntu@devops-sandbox-3:~$</span>
+                        <input type="text" class="terminal-input" id="lab-terminal-input" autocomplete="off" spellcheck="false">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <script>
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         
-        // 1. ИНТЕРАКТИВЕН МИШКА-ШЛЕЙФ (MOUSE TRAIL EFFECT)
+        // MOUSE TRAIL SCHEME
         window.addEventListener('mousemove', function(e) {
-            if(Math.random() > 0.15) return; // за да не претоварва екрана, пуска искри на произволен принцип
+            if(Math.random() > 0.15) return; 
             const sparkle = document.createElement('div');
             sparkle.className = 'sparkle';
             sparkle.style.left = e.clientX + 'px';
             sparkle.style.top = e.clientY + 'px';
-            
-            // Произволен цвят между кибер розово и неоново синьо
             sparkle.style.backgroundColor = Math.random() > 0.5 ? '#ff79c6' : '#8be9fd';
             sparkle.style.boxShadow = `0 0 8px ${sparkle.style.backgroundColor}`;
-            
             document.body.appendChild(sparkle);
             
-            // Ефект на излитане на искрата
             setTimeout(() => {
                 sparkle.style.transform = `translate(${(Math.random() - 0.5) * 40}px, ${(Math.random() - 0.5) * 40}px) scale(0)`;
                 sparkle.style.opacity = '0';
@@ -570,7 +658,7 @@
             setTimeout(() => { sparkle.remove(); }, 500);
         });
 
-        // ЖИВ ТЕРМИНАЛ ЕФЕКТ
+        // LIVE PRINTER PIPELINE
         const phrases = [
             "Loading Niya & Iveta's core...",
             "Status: Double effort mode ON...",
@@ -614,7 +702,6 @@
         }
 
         function playCrashSound() {
-            // Двоен по-мощен звук за краш
             let osc = audioCtx.createOscillator(); let osc2 = audioCtx.createOscillator(); let gain = audioCtx.createGain();
             osc.type = 'sawtooth'; osc.frequency.setValueAtTime(300, audioCtx.currentTime);
             osc.frequency.linearRampToValueAtTime(40, audioCtx.currentTime + 1.8);
@@ -643,9 +730,9 @@
                 " [CRITICAL ALERT] SGA_MAINFRAME OVERLOAD: 404_CORE_DUMP",
                 " EXCEPTION: OVERWHELMING_FEMALE_POWER_DETECTION (0xSGA2026)",
                 " Security layers are bypassing... Initializing Emergency protocols...",
-                " Извличане на резервни криптирани данни от архива...",
-                " [SGA SAFE MODE] Активиране на Скрит Образователен Модул...",
-                " Скритият архив за историята на жените в STEM е отключен!"
+                " Pulling encrypted safe data matrices from target cluster backup...",
+                " [SGA SAFE MODE] Deploying Historical Data Module nodes...",
+                " Secure historical index tracking female STEM entities unlocked successfully!"
             ];
 
             let delay = 0;
@@ -677,7 +764,115 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // КОНЗОЛА
+        // NAVIGATION NODES
+        function openAcademyDashboard() {
+            document.getElementById('main-site-page').style.display = 'none';
+            document.getElementById('dashboard-page').style.display = 'block';
+            playBeep(1000, 0.15);
+            window.scrollTo({ top: 0 });
+        }
+
+        function openAIMentorChat() {
+            document.getElementById('dashboard-page').style.display = 'none';
+            document.getElementById('ai-chat-section').style.display = 'block';
+            playBeep(850, 0.1);
+        }
+
+        function openSandboxLab() {
+            document.getElementById('dashboard-page').style.display = 'none';
+            document.getElementById('lab-section').style.display = 'block';
+            playBeep(850, 0.1);
+        }
+
+        function closeSubPanel(panelId) {
+            document.getElementById(panelId).style.display = 'none';
+            document.getElementById('dashboard-page').style.display = 'block';
+            playBeep(600, 0.08);
+        }
+
+        // 🤖 AI LIVE TEXT CHAT PIPELINE (CONNECTED TO LIVE GEMINI BACKEND)
+        async function sendChatMessage() {
+            const chatInput = document.getElementById('chat-user-input');
+            const container = document.getElementById('chat-messages-container');
+            const txt = chatInput.value.trim();
+            if(!txt) return;
+            chatInput.value = '';
+
+            // 1. Show user message
+            const uDiv = document.createElement('div');
+            uDiv.className = 'msg msg-user';
+            uDiv.innerText = txt;
+            container.appendChild(uDiv);
+            container.scrollTop = container.scrollHeight;
+            playBeep(500, 0.05);
+
+            // 2. Set thinking status
+            const aiDiv = document.createElement('div');
+            aiDiv.className = 'msg msg-ai';
+            aiDiv.innerHTML = `⚡ <strong>AI Mentor:</strong> <span style="color:#aaa;">Thinking...</span>`;
+            container.appendChild(aiDiv);
+            container.scrollTop = container.scrollHeight;
+
+            try {
+                // 3. Trigger endpoint query against your Render instance
+                const response = await fetch('https://sga-ai-backend.onrender.com/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: txt })
+                });
+                
+                const data = await response.json();
+                
+                // 4. Overwrite status node with Gemini reply stream payload
+                aiDiv.innerHTML = `⚡ <strong>AI Mentor:</strong> ${data.reply}`;
+                playBeep(880, 0.08);
+            } catch (error) {
+                aiDiv.innerHTML = `⚡ <strong>AI Mentor:</strong> [Connection Error] Mainframe link failed.`;
+                aiDiv.style.color = '#ff5555';
+            }
+            container.scrollTop = container.scrollHeight;
+        }
+
+        document.getElementById('chat-user-input').addEventListener('keypress', function(e) {
+            if(e.key === 'Enter') sendChatMessage();
+        });
+
+        // SANDBOX TERMINAL EMULATOR
+        const labTerminalInput = document.getElementById('lab-terminal-input');
+        if(labTerminalInput) {
+            labTerminalInput.addEventListener('input', playKeySound);
+            labTerminalInput.addEventListener('keypress', function(e) {
+                if(e.key === 'Enter') {
+                    const txt = this.value.trim();
+                    this.value = '';
+                    const output = document.getElementById('lab-terminal-output');
+
+                    const line = document.createElement('div');
+                    line.style.marginTop = '10px';
+                    line.innerHTML = `<span style="color:#ff79c6; margin-right:10px; font-weight:bold;">ubuntu@devops-sandbox-3:~$</span><span>${txt}</span>`;
+                    output.insertBefore(line, this.parentElement);
+
+                    const res = document.createElement('div');
+                    res.style.margin = '5px 0 10px 0';
+
+                    if(txt === 'chmod 600 secure_data.txt') {
+                        res.innerHTML = `✅ ACCESS GRANTED! System permissions updated smoothly.<br>-rw------- 1 ubuntu devops 42 Jun 27 07:02 secure_data.txt<br><span style="color:#50fa7b; font-weight:bold;">🏆 Challenge complete! Live execution log piped to your student portfolio assets.</span>`;
+                        res.style.color = '#50fa7b';
+                        playBeep(1100, 0.2);
+                    } else if (txt === 'ls -l') {
+                        res.innerHTML = `-rw-r--r-- 1 ubuntu devops 42 Jun 27 07:00 secure_data.txt`;
+                    } else {
+                        res.innerHTML = `Error. To solve the automation challenge, execute exactly: chmod 600 secure_data.txt`;
+                        res.style.color = '#ff5555';
+                        playBeep(250, 0.15);
+                    }
+                    output.insertBefore(res, this.parentElement);
+                    output.scrollTop = output.scrollHeight;
+                }
+            });
+        }
+
+        // MAIN ADM TERMINAL SYSTEM
         let currentMode = "COMMAND"; let database = null; let tempLoginUser = "";
         const termInput = document.getElementById('termInput');
         const terminalLog = document.getElementById('terminalLog');
@@ -704,23 +899,23 @@
         function handleSystemCommand(cmd) {
             if (!cmd) return;
             if (cmd === 'register') {
-                currentMode = "REG_USER"; logToTerminal('Избери администраторско име за SGA:'); termPrompt.innerText = "username>";
+                currentMode = "REG_USER"; logToTerminal('Choose an administrator username for SGA:'); termPrompt.innerText = "username>";
             } else if (cmd === 'login') {
-                if (!database) { logToTerminal('<span style="color:#ff5555">[Грешка] Няма база данни. Първо напиши "register".</span>'); return; }
-                currentMode = "LOGIN_USER"; logToTerminal('Потребителско име:'); termPrompt.innerText = "login_user>";
+                if (!database) { logToTerminal('<span style="color:#ff5555">[Error] Database empty. Please type "register" first.</span>'); return; }
+                currentMode = "LOGIN_USER"; logToTerminal('Username:'); termPrompt.innerText = "login_user>";
             } else if (cmd === 'clear') { terminalLog.innerHTML = ''; }
-            else { logToTerminal(`[Грешка] Непозната команда: '${cmd}'`); }
+            else { logToTerminal(`[Error] Unknown command structure: '${cmd}'`); }
         }
 
         function handleWizard(input) {
             if (currentMode === "REG_USER") {
                 database = { username: input, password: "" }; currentMode = "REG_PASS";
-                logToTerminal('Създай защитена парола:'); termPrompt.innerText = "password>"; termInput.type = "password";
+                logToTerminal('Create a secure configuration password:'); termPrompt.innerText = "password>"; termInput.type = "password";
             } else if (currentMode === "REG_PASS") {
                 database.password = input; termInput.type = "text"; termPrompt.innerText = "sga_admin@mainframe:~#"; currentMode = "COMMAND";
-                logToTerminal('<span style="color:#8be9fd">[УСПЕШНО] Профилът е създаден в SGA. Напиши "login" за достъп.</span>');
+                logToTerminal('<span style="color:#8be9fd">[SUCCESS] Profile deployed into SGA core registry. Type "login" to authenticate.</span>');
             } else if (currentMode === "LOGIN_USER") {
-                tempLoginUser = input; currentMode = "LOGIN_PASS"; logToTerminal('Въведи парола:'); termPrompt.innerText = "login_pass>"; termInput.type = "password";
+                tempLoginUser = input; currentMode = "LOGIN_PASS"; logToTerminal('Enter matching password node:'); termPrompt.innerText = "login_pass>"; termInput.type = "password";
             } else if (currentMode === "LOGIN_PASS") {
                 termInput.type = "text"; termPrompt.innerText = "sga_admin@mainframe:~#"; currentMode = "COMMAND";
                 if (tempLoginUser === database.username && input === database.password) {
@@ -728,17 +923,17 @@
                     document.getElementById('sysadmin-page').style.display = 'none';
                     document.getElementById('welcome-page').style.display = 'flex';
                     playBeep(1100, 0.3);
-                } else { logToTerminal('<span style="color:#ff5555">[Грешка] Грешна парола за достъп.</span>'); }
+                } else { logToTerminal('<span style="color:#ff5555">[Error] Authentication credentials invalid. Terminal locked.</span>'); }
             }
         }
 
         function logToTerminal(text) { const div = document.createElement('div'); div.innerHTML = text; terminalLog.appendChild(div); }
 
-        // CANVAS BACKGROUND
+        // CANVAS ANIMATION LOOP
         const canvas = document.getElementById('cyberCanvas'); const ctx = canvas.getContext('2d');
         let w = canvas.width = window.innerWidth; let h = canvas.height = window.innerHeight;
         let backgroundMode = "NEBULA";
-        const alphabet = "01✨👩‍💻⚡STAMGIRLS"; const fontSize = 14;
+        const alphabet = "01✨👩‍💻⚡STEMGIRLS"; const fontSize = 14;
         let columns = Math.floor(w / fontSize); const rainDrops = Array(columns).fill(1);
 
         window.addEventListener('resize', () => { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; columns = Math.floor(w / fontSize); });
