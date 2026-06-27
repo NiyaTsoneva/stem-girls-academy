@@ -108,29 +108,24 @@
 
         .top-row { display: flex; justify-content: space-between; width: 100%; gap: 15px; }
         
-        /* 🚀 ULTRA-PREMIUM SPLIT SCREEN HERO ARCHITECTURE */
+        /* 🚀 GLOBAL HERO BLOCK - CENTERING LAYOUT ENGINE */
         .hero-section { 
             margin-top: auto; 
             margin-bottom: auto; 
             width: 100%;
-            max-width: 1400px; 
+            max-width: 1100px; 
+            align-self: center; /* Центрира цялата секция в средата на екрана */
             padding: 20px 0;
-            display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            align-items: center;
-            gap: 50px;
-        }
-        
-        .hero-text-block {
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
+            align-items: center; /* Перфектно центриране по хоризонтала за логото и текстовете */
+            text-align: center; /* Центрира редовете на заглавието */
         }
-
+        
         .brand-logo-container {
             width: 100%;
-            max-width: 480px; /* Голямо, доминиращо и престижно */
-            justify-self: center;
+            max-width: 400px; /* Премиум, зашеметяващ и ясен мащаб */
+            margin-bottom: 35px;
             animation: cardSpawn 1s cubic-bezier(0.16, 1, 0.3, 1), neonPulse 3s ease-in-out infinite alternate;
         }
         
@@ -146,10 +141,8 @@
             100% { filter: drop-shadow(0 0 35px rgba(255, 121, 198, 0.7)) drop-shadow(0 0 60px rgba(139, 233, 253, 0.45)); }
         }
 
-        @media (max-width: 950px) {
-            .hero-section { grid-template-columns: 1fr; text-align: center; gap: 30px; }
-            .hero-text-block { align-items: center; }
-            .brand-logo-container { max-width: 320px; grid-row: 1; } /* На телефон логото отива най-горе */
+        @media (max-width: 768px) {
+            .brand-logo-container { max-width: 280px; margin-bottom: 25px; }
         }
 
         .main-gradient-title {
@@ -519,19 +512,17 @@
             </div>
         </div>
         
-        <!-- 📐 SPLIT SCREEN SECTION APPLIED HERE -->
+        <!-- 📐 PERFECTLY CENTERED HERO STRUCTURE -->
         <div class="hero-section">
-            <div class="hero-text-block">
-                <h1 class="main-gradient-title">DECODE THE STEREOTYPES.<br>SHAPE THE FUTURE.</h1>
-                <p style="color: var(--secondary); font-family: var(--font-mono); font-size: 11px; letter-spacing: 5px; font-weight: 700; text-shadow: 0 0 10px rgba(139, 233, 253, 0.4);">
-                    [ ENTERPRISE ECOSYSTEM DESIGNED BY FEMALE ENGINEERS FOR INDUSTRIAL SCALE LEADERSHIP ]
-                </p>
-            </div>
-            
-            <!-- 🖼️ EXPANDED LOGO POSITIONED ON THE RIGHT HALF OF THE SCREEN -->
+            <!-- 🖼️ THE LOGO IS NOW PLACED DIRECTLY IN THE MIDDLE, ABOVE THE MAIN TITLE -->
             <div class="brand-logo-container">
                 <img src="logo.png" alt="STEM Girls Academy Official Logo">
             </div>
+            
+            <h1 class="main-gradient-title">DECODE THE STEREOTYPES.<br>SHAPE THE FUTURE.</h1>
+            <p style="color: var(--secondary); font-family: var(--font-mono); font-size: 11px; letter-spacing: 5px; font-weight: 700; text-shadow: 0 0 10px rgba(139, 233, 253, 0.4);">
+                [ ENTERPRISE ECOSYSTEM DESIGNED BY FEMALE ENGINEERS FOR INDUSTRIAL SCALE LEADERSHIP ]
+            </p>
         </div>
         
         <div class="bottom-row">
